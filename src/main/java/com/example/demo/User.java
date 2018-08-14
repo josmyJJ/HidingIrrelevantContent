@@ -53,16 +53,7 @@ public class User {
     }
 
     public String getPassword() {
-
-        // I cheated... convert the password to a bcrypt password coming out.
-        // Stored in Db in clear text. Don't try this in production.
-        /*
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
-        String hashedPassword = passwordEncoder.encode(password);
-        System.out.println(hashedPassword);
-        this.password = hashedPassword;  */
-        return password;
+       return password;
     }
 
     public void setPassword(String password) {
