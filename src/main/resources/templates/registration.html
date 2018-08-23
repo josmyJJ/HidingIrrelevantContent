@@ -31,7 +31,14 @@
     Password <mark><strong>
     <span th:if="${#fields.hasErrors('password')}"
           th:errors="*{password}">Password Error</span></strong></mark>
-    <input type="text" id="password" placeholder="Password" th:field="*{password}" /><br />
+    <input type="password" id="password" placeholder="Password"
+           th:field="*{password}" /><br />
+
+    User Image <mark><strong>
+    <span th:if="${#fields.hasErrors('userImage')}"
+          th:errors="*{userImage}">Password Error</span></strong></mark>
+    <input type="text" id="userImage" placeholder="userImage"
+           th:field="*{userImage}" /><br />
 
     <button type="submit" class="btn btn-default">Submit</button>
 </form>

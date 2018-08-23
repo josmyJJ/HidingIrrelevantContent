@@ -29,26 +29,31 @@ public class DataLoader implements CommandLineRunner {
     Role adminRole = roleRepository.findByRole("ADMIN");
     Role userRole = roleRepository.findByRole("USER");
 
+    String image = "http://gravatar" +
+            ".com/avatar/d83c9bca2b678b35596a8d288d74a466?s=35";
+
     User user = new User("bob@bob.com","bob","Bob",
-            "Bobberson", true, "bob");
+            "Bobberson", true, "bob", image);
     user.setRoles(Arrays.asList(userRole));
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     userRepository.save(user);
 
+
+    String image1 = "https://secure.gravatar.com/avatar/?size=35";
     user = new User("jim@jim.com","jim","Jim",
-            "Jimmerson", true, "jim");
+            "Jimmerson", true, "jim", image1);
     user.setRoles(Arrays.asList(userRole));
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     userRepository.save(user);
 
     user = new User("admin@secure.com","password",
-            "Admin","User", true, "admin");
+            "Admin","User", true, "admin", image1);
     user.setRoles(Arrays.asList(adminRole));
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     userRepository.save(user);
 
     user = new User("sam@every.com","password","Sam",
-            "Everyman", true, "everyman");
+            "Everyman", true, "everyman", image1);
     user.setRoles(Arrays.asList(userRole, adminRole));
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     userRepository.save(user);

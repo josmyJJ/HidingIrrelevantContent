@@ -42,8 +42,11 @@ public class HomeController {
 
 
     @RequestMapping("/")
-    public String index()
-    {
+    public String index(Authentication currentUserDetails, Model model) {
+        if(currentUserDetails != null){
+        model.addAttribute("user", userService.findByUsername(currentUserDetails
+                .getName()));
+        }
         return "index";
     }
 

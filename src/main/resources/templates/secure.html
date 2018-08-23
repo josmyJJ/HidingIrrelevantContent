@@ -1,11 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="www.thymeleaf.org">
+<html lang="en" xmlns:th="www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
 </head>
 <body>
-<h3>Secure Page</h3>
+<h1>Secure Page</h1>
+<div sec:authorize="isAuthenticated()">
+    <h3>
+        Logged user: <span sec:authentication="name" />
+        <img style="border-radius: 50%;"
+             src="http://gravatar.com/avatar/d83c9bca2b678b35596a8d288d74a466?s=35" />
+    </h3>
+
+</div>
+<a href="/">Home</a>
 <a href="/logout">logout</a>
 </body>
 </html>

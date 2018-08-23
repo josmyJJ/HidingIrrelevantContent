@@ -32,20 +32,26 @@ public class User {
     @Column(name = "username")
     private String username;
 
+    @Column(name = "user_image")
+    private String userImage;
+
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(joinColumns = @JoinColumn(name="user_id"), inverseJoinColumns = @JoinColumn(name="role_id"))
+    @JoinTable(joinColumns = @JoinColumn(name="user_id"), inverseJoinColumns =
+    @JoinColumn(name="role_id"))
     private Collection<Role> roles;
 
     public User() {
     }
 
-    public User(String email, String password, String firstName, String lastName, boolean enabled, String username) {
+    public User(String email, String password, String firstName, String lastName,
+                boolean enabled, String username, String userImage) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.enabled = enabled;
         this.username = username;
+        this.userImage = userImage;
     }
 
     public long getId() {
@@ -110,5 +116,13 @@ public class User {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
     }
 }
