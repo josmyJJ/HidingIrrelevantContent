@@ -25,11 +25,11 @@ private String userImage;
     * Click OK
 
 4. Generate getters and setters for userImage
-  * Right click inside the user class and generate getters and setters
+   * Right click inside the user class and generate getters and setters
 
 5. Edit the DataLoader class
-  * Open the DataLoader.java
-  * Edit the contents to look like this:
+   * Open the DataLoader.java
+   * Edit the contents to look like this:
 
 ```java  
 import org.springframework.beans.factory.annotation.Autowired;
