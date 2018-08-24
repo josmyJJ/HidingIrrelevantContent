@@ -18,18 +18,18 @@ private String userImage;
 ```
 
 3. Edit loaded constructor to User
-    * Open the User.java file
+    * Open the User.java
     * Delete the existing loaded constructor
     * Right-click the word Java and Select Generate -> Constructor
     * Click on email, password, firstName, lastName, enabled, username, userImage
     * Click OK
 
 4. Generate getters and setters for userImage
-    * Right click inside the user class and generate getters and setters
+  * Right click inside the user class and generate getters and setters
 
-5. Edit the DataLoader Class
-    * Open the DataLoader.java
-    * Edit the contents to look like this:
+5. Edit the DataLoader class
+  * Open the DataLoader.java
+  * Edit the contents to look like this:
 
 ```java  
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,30 +61,30 @@ public class DataLoader implements CommandLineRunner {
     Role adminRole = roleRepository.findByRole("ADMIN");
     Role userRole = roleRepository.findByRole("USER");
 
-    String image = "https://secure.gravatar.com/avatar/?size=35";
+    String userImageUrl = "https://secure.gravatar.com/avatar/?size=35";
 
     User user = new User("bob@bob.com","bob","Bob",
-            "Bobberson", true, "bob", image);
+            "Bobberson", true, "bob", userImageUrl);
     user.setRoles(Arrays.asList(userRole));
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     userRepository.save(user);
 
     user = new User("jim@jim.com","jim","Jim",
-            "Jimmerson", true, "jim", image);
+            "Jimmerson", true, "jim", userImageUrl);
     user.setRoles(Arrays.asList(userRole));
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     userRepository.save(user);
 
     user = new User("sam@every.com","password","Sam",
-            "Everyman", true, "everyman", image);
+            "Everyman", true, "everyman", userImageUrl);
     user.setRoles(Arrays.asList(userRole, adminRole));
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     userRepository.save(user);
 
-    String image1 = "http://gravatar" +
+    String adminImageUrl = "http://gravatar" +
             ".com/avatar/d83c9bca2b678b35596a8d288d74a466?s=35";
     user = new User("admin@secure.com","password",
-            "Admin","User", true, "admin", image1);
+            "Admin","User", true, "admin", adminImageUrl);
     user.setRoles(Arrays.asList(adminRole));
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     userRepository.save(user);
@@ -94,7 +94,7 @@ public class DataLoader implements CommandLineRunner {
 
 6. Edit the HomeController
     * Open the HomeController.java file
-    * Replace the existing index method with the following:
+    * Replace the existing index method with the following code:
 
 ```java
 @RequestMapping("/")
@@ -121,7 +121,7 @@ public String index(Authentication currentUserDetails, Model model) {
 <h1>Home Page</h1>
 <div sec:authorize="isAuthenticated()">
     <h3>
-    Logged user: <span sec:authentication="name" />
+    Logged user: <span sec:authentication="name">
         <img style="border-radius: 50%; width: 35px; height: 35px;"
                 th:src="${user.userImage}" />
     </h3>
@@ -153,7 +153,7 @@ public String index(Authentication currentUserDetails, Model model) {
 </body>
 </html>
 ```
-8. Edit the index template
+8. Edit the secure template
     * Open secure.html
     * Edit it to look like this:
 ```html
@@ -168,9 +168,9 @@ public String index(Authentication currentUserDetails, Model model) {
 <h1>Secure Page</h1>
 <div sec:authorize="isAuthenticated()">
     <h3>
-        Logged user: <span sec:authentication="name" />
-        <img style="border-radius: 50%;"
-             src="http://gravatar.com/avatar/d83c9bca2b678b35596a8d288d74a466?s=35" />
+        Logged user: <span sec:authentication="name" >
+        <img style="border-radius: 50%; width: 35px; height: 35px;"
+             th:src="${user.userImage}" />
     </h3>
 
 </div>
@@ -181,3 +181,28 @@ public String index(Authentication currentUserDetails, Model model) {
 ```  
 
 9. Run your application and open a browser, got to http://localhost:8080/
+
+## What is going on
+
+### User class
+The variable userImage will be used to store the user image as a string.
+Here we are creating a new loaded constructor that contains the userImage.
+
+### Data loader
+Data loader will be updated with a string for user image.
+
+### HomeController
+findByUsername finds the user by their username and the in-memory authentication
+provider gets the username.
+
+### index page
+Authentication is used to check if the user is logged in or not.
+sec:authorize="isAuthenticated()" - If use user is logged in then the content
+inside the div is shown to the logged in user.
+
+sec:authorize="!isAuthenticated()" - If the user is not logged in then the content
+inside this div is displayed.
+
+sec:authentication="name" - shows the name of the logged user.
+
+th:src="${user.userImage} - is where we get the user image. 
